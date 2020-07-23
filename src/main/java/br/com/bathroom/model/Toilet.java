@@ -3,11 +3,10 @@ package br.com.bathroom.model;
 import javax.json.bind.annotation.JsonbTypeSerializer;
 import javax.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Toilet {
+public class Toilet extends Model{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +16,7 @@ public class Toilet {
 
     private Boolean isFull = false;
 
-    @OneToMany(mappedBy = "toilet", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "toilet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bog> bogs;
 
     public Toilet() {

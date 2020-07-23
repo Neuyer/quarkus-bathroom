@@ -3,7 +3,7 @@ package br.com.bathroom.model;
 import javax.persistence.*;
 
 @Entity
-public class Bog {
+public class Bog extends Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

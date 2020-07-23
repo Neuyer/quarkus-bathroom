@@ -1,24 +1,28 @@
 package br.com.bathroom.service.impl;
 
-import br.com.bathroom.model.Bog;
-import br.com.bathroom.model.Toilet;
-import br.com.bathroom.request.ToiletRequest;
-import br.com.bathroom.service.ToiletService;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.com.bathroom.model.Bog;
+import br.com.bathroom.model.Toilet;
+import br.com.bathroom.repository.BogRepository;
+import br.com.bathroom.repository.ToiletRepository;
+import br.com.bathroom.request.ToiletRequest;
+import br.com.bathroom.service.ToiletService;
 
 @ApplicationScoped
 @Transactional
 public class ToiletServiceImpl implements ToiletService {
 
     @Inject
-    EntityManager em;
+    BogRepository bogRepository;
+
+    @Inject
+    ToiletRepository toiletRepository;
 
     @Override
     public Toilet create(ToiletRequest tRequest) {
@@ -30,31 +34,33 @@ public class ToiletServiceImpl implements ToiletService {
 
             Bog bog = new Bog(toilet);
 
-            em.persist(bog);
+           bogRepository.create(bog);
             bogs.add(bog);
         }
 
         toilet.setBathroomName(tRequest.getName());
         toilet.setBogs(bogs);
 
-        em.persist(toilet);
+        toiletRepository.create(toilet);
 
         return toilet;
 
     }
 
     @Override
-    @Transactional
     public List<Toilet> lisToilets() {
 
-        List<Toilet> list = em.createQuery("SELECT t FROM Toilet t", Toilet.class).getResultList();
+        return toiletRepository.findAll();
 
-        return list;
     }
 
     @Override
     public Toilet findByID(Long id) {
         // TODO Auto-generated method stub
-        return em.createQuery("SELECT DISTINCT t FROM Toilet t where t.id =" + id + "", Toilet.class).getSingleResult();
+        
+        Toilet t = toiletRepository.findById(id);
+
+        return t;
     }
+
 }

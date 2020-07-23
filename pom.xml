@@ -60,8 +60,7 @@
     <!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-jsonb -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-jsonb</artifactId>
-      <version>1.6.1.Final</version>
+      <artifactId>quarkus-resteasy-jackson</artifactId>
     </dependency>
   </dependencies>
   <build>
